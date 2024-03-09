@@ -8,6 +8,8 @@ typedef struct BinaryTree {
     struct Node *rootNode;
 }binaryTree;
 
-void setLeftChild(int value, node *parent);
-void setRightChild(int value, node *parent);
+node *createFromArray(int positionInTree, int tree[], int treeSize);
+node *createNode(int value, node *leftChild, node *rightChild);
+void insertLeftChild(node *parent, node *child);
+void insertRightChild(node *parent, node *child);
 void show(node *parent);
