@@ -5,6 +5,59 @@
 #define LEFT_POSITION(i) ((i*2)+1)
 #define RIGHT_POSITION(i) ((i*2)+2)
 
+static node *_removeNode(int value, node **currentNode);
+
+node *removeNode(int value, node *currentNode) {
+    if (currentNode == NULL) {
+        return NULL;
+    }
+
+    if (currentNode->value == value) {
+        printf("Cannot delete root node\n");
+        return NULL;
+    }
+
+    node *nodeToRemove = _removeNode(value, &currentNode->leftChild);
+    if (nodeToRemove != NULL) {
+        return nodeToRemove;
+    }
+
+    nodeToRemove = _removeNode(value, &currentNode->rightChild);
+    if (nodeToRemove != NULL) {
+        return nodeToRemove;
+    }
+
+    return NULL;
+}
+
+static node *_removeNode(int value, node **currentNode) {
+    if (*currentNode != NULL) {
+        if ((*currentNode)->value == value) {
+            if ((*currentNode)->leftChild != NULL
+                && (*currentNode)->rightChild != NULL) {
+                printf("Cannot delete parent node with two children\n");
+                return NULL;
+            } else {
+                node *nodeToRemove = *currentNode;
+                if ((*currentNode)->leftChild != NULL) {
+                   *currentNode = (*currentNode)->leftChild;
+                } else if ((*currentNode)->rightChild != NULL) {
+                    *currentNode = (*currentNode)->rightChild;
+                } else {
+                    *currentNode = NULL;
+                }
+                return nodeToRemove;
+            }
+        } else {
+            node *nodeToRemove = removeNode(value, *currentNode);
+            if (nodeToRemove != NULL) {
+                return nodeToRemove;
+            }
+        }
+    }
+    return NULL;
+}
+
 node *findNode(int value, node *currentNode) {
     if (currentNode == NULL) {
         return NULL;
