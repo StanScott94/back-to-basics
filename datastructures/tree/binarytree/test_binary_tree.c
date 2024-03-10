@@ -1,44 +1,36 @@
 #include <stdio.h>
 #include "binary_tree.h"
 
+node *removeNode(int value, node *currentNode);
+
 node *_removeNode(int value, node *currentNode) {
-    if (currentNode == NULL) {
-        return NULL;
-    }
-
-    if (currentNode->value == value) {
-        printf("Cannot delete root node\n");
-        return NULL;
-    }
-
-    node *nodeToRemove;
-
-    if (currentNode->leftChild != NULL) {
-        if (currentNode->leftChild->value == value) {
-            if (currentNode->leftChild->leftChild != NULL
-                && currentNode->leftChild->rightChild != NULL) {
+    if (currentNode != NULL) {
+        if (currentNode->value == value) {
+            if (currentNode->leftChild != NULL
+                && currentNode->rightChild != NULL) {
                 printf("Cannot delete parent node with two children\n");
                 return NULL;
             } else {
-                if (currentNode->leftChild->leftChild != NULL) {
-                    nodeToRemove = currentNode->leftChild;
-                    currentNode->leftChild = currentNode->leftChild->leftChild;
-                } else if (currentNode->leftChild->rightChild != NULL) {
-                    nodeToRemove = currentNode->leftChild;
-                    currentNode->leftChild = currentNode->leftChild->rightChild;
+                node *nodeToRemove;
+                if (currentNode->leftChild != NULL) {
+                    nodeToRemove = currentNode;
+                    currentNode = currentNode->leftChild;
+                } else if (currentNode->rightChild != NULL) {
+                    nodeToRemove = currentNode;
+                    currentNode = currentNode->rightChild;
                 } else {
-                    currentNode->leftChild = NULL;
-                    return nodeToRemove;
+                    nodeToRemove = currentNode;
+                    currentNode = NULL;
                 }
+                return nodeToRemove;
             }
         } else {
-            nodeToRemove = removeNode(value, currentNode->leftChild);
+            node *nodeToRemove = removeNode(value, currentNode);
             if (nodeToRemove != NULL) {
                 return nodeToRemove;
             }
         }
     }
-
     return NULL;
 }
 
