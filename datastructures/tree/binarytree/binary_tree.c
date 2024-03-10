@@ -35,19 +35,17 @@ node *createNode(int value, node *leftChild, node *rightChild) {
 }
 
 void insertLeftChild(node *parent, node *child) {
-    node *currentChild = parent->leftChild;
-    parent->leftChild = child;
-    if (child != NULL) {
-        child->leftChild = currentChild;
+    if (parent->leftChild != NULL) {
+        child->leftChild = parent->leftChild;
     }
+    parent->leftChild = child;
 }
 
 void insertRightChild(node *parent, node *child) {
-    node *currentChild = parent->rightChild;
-    parent->rightChild = child;
-    if (child != NULL) {
-        child->leftChild = currentChild;
+    if (parent->rightChild != NULL) {
+        child->leftChild = parent->rightChild;
     }
+    parent->rightChild = child;
 }
 
 void show(node *parent) {
