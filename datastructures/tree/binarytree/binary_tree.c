@@ -5,6 +5,28 @@
 #define LEFT_POSITION(i) ((i*2)+1)
 #define RIGHT_POSITION(i) ((i*2)+2)
 
+node *findNode(int value, node *currentNode) {
+    if (currentNode == NULL) {
+        return NULL;
+    }
+
+    if (currentNode->value == value) {
+        return currentNode;
+    }
+
+    node *nodeToFind = findNode(value, currentNode->leftChild);
+    if (nodeToFind != NULL) {
+        return nodeToFind;
+    }
+ 
+    nodeToFind = findNode(value, currentNode->rightChild);
+    if (nodeToFind != NULL) {
+        return nodeToFind;
+    }
+ 
+    return NULL;
+}
+
 node *createFromArray(int positionInTree, int tree[], int treeSize) {
     if (positionInTree >= treeSize || tree[positionInTree] == -1) {
        return NULL;
