@@ -6,7 +6,7 @@
 #define VERIFY(s, i) (printf("%s %s", s, (i) ? "successful\n" : "failed\n"))
 
 void testCreateNode() {
-    DoublyLinkedNode *node = createNode(10, NULL, NULL);
+    DoublyLinkedNode *node = createDLNode(10, NULL, NULL);
     
     bool expected = node->data == 10 &&
                     node->previous == NULL &&
@@ -20,8 +20,8 @@ void testCreateNode() {
 void testInsertBeginning(DoublyLinkedList *list) {
     list = createList(NULL, NULL);
     
-    DoublyLinkedNode *nodeA = createNode(20, NULL, NULL);
-    DoublyLinkedNode *nodeB = createNode(10, NULL, NULL);
+    DoublyLinkedNode *nodeA = createDLNode(20, NULL, NULL);
+    DoublyLinkedNode *nodeB = createDLNode(10, NULL, NULL);
     
     insertBeginning(nodeA, list);
     insertBeginning(nodeB, list);
@@ -42,8 +42,8 @@ void testInsertBeginning(DoublyLinkedList *list) {
 void testInsertEnd(DoublyLinkedList *list) {
     list = createList(NULL, NULL);
     
-    DoublyLinkedNode *nodeA = createNode(200, NULL, NULL);
-    DoublyLinkedNode *nodeB = createNode(100, NULL, NULL);
+    DoublyLinkedNode *nodeA = createDLNode(200, NULL, NULL);
+    DoublyLinkedNode *nodeB = createDLNode(100, NULL, NULL);
             
     insertEnd(nodeA, list);
     insertEnd(nodeB, list);
@@ -64,12 +64,12 @@ void testInsertEnd(DoublyLinkedList *list) {
 void testRemove(DoublyLinkedList *list) {
     list = createList(NULL, NULL);
     
-    DoublyLinkedNode *nodeA = createNode(200, NULL, NULL);
-    DoublyLinkedNode *nodeB = createNode(100, NULL, NULL);
+    DoublyLinkedNode *nodeA = createDLNode(200, NULL, NULL);
+    DoublyLinkedNode *nodeB = createDLNode(100, NULL, NULL);
             
     insertEnd(nodeA, list);
     insertEnd(nodeB, list);
-    removeNode(nodeB, list);
+    removeDLNode(nodeB, list);
 
     bool expected = list->head->data == 200 &&
         list->head->previous == NULL &&
@@ -79,7 +79,7 @@ void testRemove(DoublyLinkedList *list) {
     VERIFY("testRemove B", expected);
 
     insertEnd(nodeB, list);
-    removeNode(nodeA, list);
+    removeDLNode(nodeA, list);
         
     expected = list->head->data == 100 &&
         list->head->previous == NULL &&

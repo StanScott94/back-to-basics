@@ -1,14 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "binary_tree.h"
+#include "../../queue/doubly-linked-list-queue/doubly_linked_list_queue.h"
 
 #define LEFT_POSITION(i) ((i*2)+1)
 #define RIGHT_POSITION(i) ((i*2)+2)
 
-static node *_removeNode(int value, node **currentNode);
+static node *_removeBTNode(int value, node **currentNode);
 static node *_createFromArray(int positionInTree, int *tree, int treeSize);
 
-node *removeNode(int value, node *currentNode) {
+node *removeBTNode(int value, node *currentNode) {
     if (currentNode == NULL) {
         return NULL;
     }
@@ -18,12 +19,12 @@ node *removeNode(int value, node *currentNode) {
         return NULL;
     }
 
-    node *nodeToRemove = _removeNode(value, &currentNode->leftChild);
+    node *nodeToRemove = _removeBTNode(value, &currentNode->leftChild);
     if (nodeToRemove != NULL) {
         return nodeToRemove;
     }
 
-    nodeToRemove = _removeNode(value, &currentNode->rightChild);
+    nodeToRemove = _removeBTNode(value, &currentNode->rightChild);
     if (nodeToRemove != NULL) {
         return nodeToRemove;
     }
@@ -31,7 +32,7 @@ node *removeNode(int value, node *currentNode) {
     return NULL;
 }
 
-static node *_removeNode(int value, node **currentNode) {
+static node *_removeBTNode(int value, node **currentNode) {
     if (*currentNode != NULL) {
         if ((*currentNode)->value == value) {
             if ((*currentNode)->leftChild != NULL
@@ -50,7 +51,7 @@ static node *_removeNode(int value, node **currentNode) {
                 return nodeToRemove;
             }
         } else {
-            node *nodeToRemove = removeNode(value, *currentNode);
+            node *nodeToRemove = removeBTNode(value, *currentNode);
             if (nodeToRemove != NULL) {
                 return nodeToRemove;
             }
@@ -59,7 +60,7 @@ static node *_removeNode(int value, node **currentNode) {
     return NULL;
 }
 
-node *findNode(int value, node *currentNode) {
+node *findBTNode(int value, node *currentNode) {
     if (currentNode == NULL) {
         return NULL;
     }
@@ -68,12 +69,12 @@ node *findNode(int value, node *currentNode) {
         return currentNode;
     }
 
-    node *nodeToFind = findNode(value, currentNode->leftChild);
+    node *nodeToFind = findBTNode(value, currentNode->leftChild);
     if (nodeToFind != NULL) {
         return nodeToFind;
     }
  
-    nodeToFind = findNode(value, currentNode->rightChild);
+    nodeToFind = findBTNode(value, currentNode->rightChild);
     if (nodeToFind != NULL) {
         return nodeToFind;
     }
@@ -90,7 +91,7 @@ static node *_createFromArray(int positionInTree, int *tree, int treeSize) {
        return NULL;
     }
 
-    node *newNode = createNode(tree[positionInTree], NULL, NULL);
+    node *newNode = createBTNode(tree[positionInTree], NULL, NULL);
 
     if (LEFT_POSITION(positionInTree) < treeSize) {
         node *leftChild = _createFromArray(LEFT_POSITION(positionInTree), tree, treeSize);
@@ -102,11 +103,44 @@ static node *_createFromArray(int positionInTree, int *tree, int treeSize) {
         insertRightChild(newNode, rightChild);
     }
 
-    show(newNode);
+//    show(newNode);
     return newNode;
 }
 
-node *createNode(int value, node *leftChild, node *rightChild) {
+int *writeToArray(node *root, int *arraySize) {
+
+    DoublyLinkedListQueue *queue = createQueue();
+        push(root, queue);
+        
+        node *currentNode;
+        int index = 0;
+        int capacity = 1;
+        int *storedBinaryTree = (int *)malloc(capacity * sizeof(int));
+     
+        while (!isEmpty(queue)) {
+            currentNode = pop(queue);
+            if (index == capacity) {
+                capacity *= 2;
+                int *temp = (int *)realloc(storedBinaryTree, capacity * sizeof(int));
+                if (temp == NULL) {
+                    free(storedBinaryTree);
+                    return NULL;
+                }
+                storedBinaryTree = temp;
+            }
+            storedBinaryTree[index++] = currentNode->value;
+            if(currentNode->leftChild != NULL) {
+                push(currentNode->leftChild, queue);
+            }
+            if(currentNode->rightChild != NULL) {
+                push(currentNode->rightChild, queue);
+            }
+        }
+    *arraySize = index;
+    return storedBinaryTree;
+}
+
+node *createBTNode(int value, node *leftChild, node *rightChild) {
     node *parent = malloc(sizeof(node));
     parent->value = value;
     parent->leftChild = leftChild;

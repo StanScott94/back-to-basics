@@ -1,5 +1,5 @@
 typedef struct DoublyLinkedNode {
-    int data;
+    void *data;
     struct DoublyLinkedNode *previous;
     struct DoublyLinkedNode *next;
 }DoublyLinkedNode;
@@ -12,7 +12,7 @@ typedef struct DoublyLinkedList {
 DoublyLinkedList *createList(DoublyLinkedNode *head,
                              DoublyLinkedNode *tail);
 
-DoublyLinkedNode *createNode(int data,
+DoublyLinkedNode *createDLNode(void *data,
                              DoublyLinkedNode *previous,
                              DoublyLinkedNode *next);
 
@@ -28,4 +28,4 @@ void insertAfter(DoublyLinkedNode *newNode,
 
 void insertEnd(DoublyLinkedNode *newNode, DoublyLinkedList *list);
 
-void removeNode(DoublyLinkedNode *newNode, DoublyLinkedList *list);
+void removeDLNode(DoublyLinkedNode *newNode, DoublyLinkedList *list);

@@ -14,7 +14,8 @@ int main() {
     
     expected = pop(queue) == 10 &&
                pop(queue) == 20 &&
-               pop(queue) == 30;
+               pop(queue) == 30 &&
+               isEmpty(queue);
     
     VERIFY("DoublyLinkedListQueue", expected);
 }

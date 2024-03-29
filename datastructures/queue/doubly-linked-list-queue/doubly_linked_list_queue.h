@@ -1,7 +1,10 @@
+#include <stdbool.h>
+
 typedef struct DoublyLinkedListQueue {
     struct DoublyLinkedList *list;
 }DoublyLinkedListQueue;
 
 DoublyLinkedListQueue *createQueue();
-void push(int data, DoublyLinkedListQueue *queue);
-int pop(DoublyLinkedListQueue *queue);
+void push(void *data, DoublyLinkedListQueue *queue);
+void *pop(DoublyLinkedListQueue *queue);
+bool isEmpty(DoublyLinkedListQueue *queue);

@@ -9,17 +9,21 @@ DoublyLinkedListQueue *createQueue() {
     return queue;
 }
 
-void push(int data, DoublyLinkedListQueue *queue) {
-    DoublyLinkedNode *node = createNode(data, NULL, NULL);
+void push(void *data, DoublyLinkedListQueue *queue) {
+    DoublyLinkedNode *node = createDLNode(data, NULL, NULL);
     insertBeginning(node, queue->list);
 }
 
-int pop(DoublyLinkedListQueue *queue) {
+void *pop(DoublyLinkedListQueue *queue) {
     if (queue->list->tail == NULL) {
-        return -1;
+        return NULL;
     }
-    int data = queue->list->tail->data;
-    removeNode(queue->list->tail, queue->list);
+    void *data = queue->list->tail->data;
+    removeDLNode(queue->list->tail, queue->list);
     return data;
+}
+
+bool isEmpty(DoublyLinkedListQueue *queue) {
+    return queue->list->head == NULL;
 }
 

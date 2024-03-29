@@ -9,7 +9,7 @@ DoublyLinkedList *createList(DoublyLinkedNode *head,
     return list;
 }
 
-DoublyLinkedNode *createNode(int data, 
+DoublyLinkedNode *createDLNode(void *data, 
                              DoublyLinkedNode *previous,
                              DoublyLinkedNode *next) {
     DoublyLinkedNode *node = malloc(sizeof(DoublyLinkedNode));
@@ -64,7 +64,7 @@ void insertEnd(DoublyLinkedNode *newNode, DoublyLinkedList *list) {
     }
 }
 
-void removeNode(DoublyLinkedNode *nodeToRemove, DoublyLinkedList *list) {
+void removeDLNode(DoublyLinkedNode *nodeToRemove, DoublyLinkedList *list) {
     if (nodeToRemove->previous == NULL) {
         list->head = nodeToRemove->next;
     } else {
