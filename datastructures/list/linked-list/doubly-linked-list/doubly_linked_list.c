@@ -63,3 +63,16 @@ void insertEnd(DoublyLinkedNode *newNode, DoublyLinkedList *list) {
         insertAfter(newNode, list->tail, list);
     }
 }
+
+void removeNode(DoublyLinkedNode *nodeToRemove, DoublyLinkedList *list) {
+    if (nodeToRemove->previous == NULL) {
+        list->head = nodeToRemove->next;
+    } else {
+        nodeToRemove->previous->next = nodeToRemove->next;
+    }
+    if (nodeToRemove->next == NULL) {
+        list->tail = nodeToRemove->previous;
+    } else {
+        nodeToRemove->next->previous = nodeToRemove->previous;
+    }
+}

@@ -27,3 +27,5 @@ void insertAfter(DoublyLinkedNode *newNode,
                  DoublyLinkedList *list);
 
 void insertEnd(DoublyLinkedNode *newNode, DoublyLinkedList *list);
+
+void removeNode(DoublyLinkedNode *newNode, DoublyLinkedList *list);

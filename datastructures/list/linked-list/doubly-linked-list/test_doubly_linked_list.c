@@ -61,12 +61,44 @@ void testInsertEnd(DoublyLinkedList *list) {
     VERIFY("testInsertEnd", expected);
 }
 
+void testRemove(DoublyLinkedList *list) {
+    list = createList(NULL, NULL);
+    
+    DoublyLinkedNode *nodeA = createNode(200, NULL, NULL);
+    DoublyLinkedNode *nodeB = createNode(100, NULL, NULL);
+            
+    insertEnd(nodeA, list);
+    insertEnd(nodeB, list);
+    removeNode(nodeB, list);
+
+    bool expected = list->head->data == 200 &&
+        list->head->previous == NULL &&
+        list->head->next == NULL &&
+        list->tail->data == 200;
+
+    VERIFY("testRemove B", expected);
+
+    insertEnd(nodeB, list);
+    removeNode(nodeA, list);
+        
+    expected = list->head->data == 100 &&
+        list->head->previous == NULL &&
+        list->head->next == NULL &&
+        list->tail->data == 100;
+
+    VERIFY("testRemove A", expected);
+
+    free(nodeA);
+    free(nodeB);
+}
+
 int main() {
     DoublyLinkedList *list = NULL;
 
     testCreateNode();
     testInsertBeginning(list);
     testInsertEnd(list);
-
+    testRemove(list);
+    
     free(list);
 }
