@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+void increment(int *pointer) {
+    (*pointer)++;
+}
+
 int main(void) {
     int x = 10;
     int *y = &x;
@@ -14,4 +18,6 @@ int main(void) {
     printf("address of pointer to pointer z = %p\n", (void *)&z);
     printf("dereferenced pointer z = %p\n", (void *)*z);
     printf("dereferenced pointer to pointer z = %d\n", **z);
+    increment(y);
+    printf("increment pointer y = %d\n", *y);
 }
