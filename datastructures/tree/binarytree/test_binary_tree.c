@@ -29,6 +29,18 @@ void testInsertChild() {
                               parentNode->rightChild->value == 25);
 }
 
+void testRemoveNode() {
+    int binaryTree[] = {100, 19, 36, 50, 3, 25, 1, 17, -1, 2, 7};
+    node *root = createFromArray(binaryTree, sizeof(binaryTree)/sizeof(binaryTree[0]));
+    
+    removeBTNode(50, root);
+       
+    VERIFY("testRemoveNode", root->leftChild->value == 19 &&
+                             root->rightChild->value == 36 &&
+                             root->leftChild->leftChild->value == 17 &&
+                             root->leftChild->rightChild->value == 3);
+}
+                                                      
 void testWriteToArray() {
     int binaryTree[] = {100, 19, 36, 17, 3, 25, 1, 2, 7};
     node *root = createFromArray(binaryTree, sizeof(binaryTree)/sizeof(binaryTree[0]));
@@ -51,5 +63,6 @@ void testWriteToArray() {
 int main() {
     testFindNode();
     testInsertChild();
+    testRemoveNode();
     testWriteToArray();
 }
