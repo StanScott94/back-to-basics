@@ -10,7 +10,7 @@ typedef struct BinaryTree {
 
 node *removeNode(int value, node *currentNode);
 node *findNode(int value, node *currentNode);
-node *createFromArray(int positionInTree, int tree[], int treeSize);
+node *createFromArray(int *tree, int treeSize);
 node *createNode(int value, node *leftChild, node *rightChild);
 void insertLeftChild(node *parent, node *child);
 void insertRightChild(node *parent, node *child);

@@ -6,6 +6,7 @@
 #define RIGHT_POSITION(i) ((i*2)+2)
 
 static node *_removeNode(int value, node **currentNode);
+static node *_createFromArray(int positionInTree, int *tree, int treeSize);
 
 node *removeNode(int value, node *currentNode) {
     if (currentNode == NULL) {
@@ -80,7 +81,11 @@ node *findNode(int value, node *currentNode) {
     return NULL;
 }
 
-node *createFromArray(int positionInTree, int tree[], int treeSize) {
+node *createFromArray(int *tree, int treeSize) {
+    return _createFromArray(0, tree, treeSize);
+}
+
+static node *_createFromArray(int positionInTree, int *tree, int treeSize) {
     if (positionInTree >= treeSize || tree[positionInTree] == -1) {
        return NULL;
     }
@@ -88,12 +93,12 @@ node *createFromArray(int positionInTree, int tree[], int treeSize) {
     node *newNode = createNode(tree[positionInTree], NULL, NULL);
 
     if (LEFT_POSITION(positionInTree) < treeSize) {
-        node *leftChild = createFromArray(LEFT_POSITION(positionInTree), tree, treeSize);
+        node *leftChild = _createFromArray(LEFT_POSITION(positionInTree), tree, treeSize);
         insertLeftChild(newNode, leftChild);
     }
 
     if (RIGHT_POSITION(positionInTree) < treeSize) {
-        node *rightChild = createFromArray(RIGHT_POSITION(positionInTree), tree, treeSize);
+        node *rightChild = _createFromArray(RIGHT_POSITION(positionInTree), tree, treeSize);
         insertRightChild(newNode, rightChild);
     }
 
